@@ -1,300 +1,404 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Github, 
-  Linkedin, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  ExternalLink, 
-  Code2, 
-  Layout, 
-  Trophy, 
-  GraduationCap, 
-  Briefcase,
-  ChevronDown,
-  Sparkles,
-  Terminal,
-  Cpu,
-  Globe,
-  Rocket,
-  Search,
-  Brain,
-  Database,
-  Cloud
-} from 'lucide-react';
+import React from 'react';
+import { Mail, Github, Linkedin, ExternalLink, Code, Briefcase, Award, GraduationCap, ChevronRight, Brain, Database, Cloud, Terminal, Code2, Users } from 'lucide-react';
 
-const CustomStyles = () => (
-  <style>
-    {`
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-      
-      html { scroll-behavior: smooth; font-family: 'Inter', sans-serif; background-color: #020617; }
-      
-      .gradient-text {
-        background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-size: 200% auto;
-        animation: shine 5s linear infinite;
-      }
-      
-      .glass-panel {
-        background: rgba(30, 41, 59, 0.4);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      
-      .glass-card {
-        background: linear-gradient(145deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      
-      .glass-card:hover {
-        transform: translateY(-8px);
-        border-color: rgba(56, 189, 248, 0.3);
-        box-shadow: 0 20px 40px -10px rgba(56, 189, 248, 0.15);
-      }
-
-      .bg-grid-pattern {
-        background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-        background-size: 32px 32px;
-      }
-
-      .animate-float {
-        animation: float 6s ease-in-out infinite;
-      }
-
-      @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-15px); }
-        100% { transform: translateY(0px); }
-      }
-
-      @keyframes shine { to { background-position: 200% center; } }
-      .animate-fade-in { animation: fade-in 1s ease-out forwards; }
-      @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    `}
-  </style>
-);
-
-const PORTFOLIO_DATA = {
-  name: "Dhanush Hebbar",
-  role: "Web Developer & AI Enthusiast",
-  summary: "I am a passionate MCA graduate, Full-Stack Web Developer, and dedicated AI Enthusiast. My tech journey is rooted in deep persistence—from learning my first computer keys in 1st standard to architecting full-stack web apps in my 6th sem BCA, I spent an incredible 16 years growing and evolving on the exact same campus.\n\nToday, I leverage that foundational drive to build intelligent, scalable applications. I have successfully architected and deployed multiple full-stack projects across diverse technologies, heavily integrating modern AI (like Gemini, Vertex AI, and Agentic workflows) into real-world solutions. I am highly adaptable, endlessly curious, and driven to bridge the gap between traditional web development and cutting-edge artificial intelligence.",
-  contact: {
-    email: "dhanushhebbar6@gmail.com",
-    phone: "+91 8618543398",
-    location: "Mangaluru, India",
-    linkedin: "https://linkedin.com/in/dhanush-hebbar",
-    github: "https://github.com/DhanushHebbar"
+const SKILLS_DATA = [
+  {
+    category: "AI & Intelligence Integration",
+    icon: <Brain className="w-5 h-5 text-purple-400" />,
+    items: ["Gemini 1.5 Integration", "Agentic AI Workflows", "Vertex AI", "NLP & Sentiment Analysis", "RAG Pipelines"]
   },
-  skills: [
-    { category: "AI Integrations", icon: <Brain className="text-purple-400" size={20}/>, items: ["Gemini 1.5", "Vertex AI", "Agentic AI", "NLP Pipelines", "Web Speech API"] },
-    { category: "Frontend", icon: <Layout className="text-sky-400" size={20}/>, items: ["React.js", "Tailwind CSS", "HTML5"] },
-    { category: "Backend", icon: <Terminal className="text-indigo-400" size={20}/>, items: ["Python", "FastAPI", "Node.js", "Express.js"] },
-    { category: "Databases", icon: <Database className="text-emerald-400" size={20}/>, items: ["PostgreSQL", "MongoDB", "Firebase", "DBMS Core"] },
-    { category: "Cloud & Deployment", icon: <Cloud className="text-blue-400" size={20}/>, items: ["Vercel", "Render", "CI/CD", "GitHub", "SEO"] },
-    { category: "Core & Soft Skills", icon: <Sparkles className="text-yellow-400" size={20}/>, items: ["System Architecture", "Analytical Thinking", "Team Collaboration"] }
-  ],
-  experience: [
-    { role: "Full Stack Web Development Intern", company: "SkillXAcademy, Bangalore (Online)", duration: "Mar 2025 - Jun 2025", description: "14-week internship covering MERN stack development, REST APIs, and real-time web applications. Built The Autonomous Cognitive Interviewer (AI mock platform) and TaskFlow (real-time collaboration tool)." },
-    { role: "Full Stack Developer Intern", company: "Zephyr Technologies & Solutions Pvt Ltd, Mangaluru", duration: "Mar 2024 - Apr 2024", description: "Contributed to full-stack projects involving both frontend interface design and backend development. Improved application performance and enhanced overall user experience through code optimization." }
-  ],
-  projects: [
-    { 
-      title: "xTransMatrix | Moultrie", 
-      tech: "React, FastAPI, MongoDB, Vercel, Render", 
-      description: "Cloud-native IoT data engineering pipeline. Transforms massive volumes of unstructured customer feedback into actionable intelligence, automating sentiment annotation and identifying early churn signals.", 
-      live: "https://xtransmatrix-case-study.vercel.app",
-      isCaseStudy: true 
-    },
-    { title: "TaskFlow", tech: "React.js, Node.js, Express.js, MongoDB, Socket.IO", description: "Enterprise-grade project management platform featuring real-time collaboration, Agile sprint tracking, and AI assistance.", live: "https://taskflow-omega-drab.vercel.app" },
-    { title: "The Cognitive Interviewer", tech: "React, Tailwind CSS, Web Speech API", description: "Professional-grade, voice-first mock interview platform with real-time AI evaluation, performance analytics, and dynamic curriculum unlocking.", live: "https://interview-sim-client-frontend.vercel.app" },
-    { title: "The Weather", tech: "React, OpenWeatherMap API", description: "Expedition-themed meteorological dashboard framing climate data through the lens of exploration, pairing real-time metrics with situational survival gear recommendations.", live: "https://weather-proj-phi.vercel.app" },
-    { title: "StudyForge", tech: "FastAPI, React, PostgreSQL, Firebase", description: "AI-powered learning platform with document-grounded responses, quiz engine, and collaborative whiteboard.", live: "https://studyforge4.vercel.app" },
-    { title: "Expense Tracking System", tech: "React, Node.js, Express, MongoDB", description: "Financial dashboard with visual analytics to track income/expenses and comprehensive transaction management.", live: "https://personal-expense-track-seven.vercel.app" },
-    { title: "Student Management System", tech: "Java, Web Technologies", description: "A robust, web-based backend-heavy system for administrative workflows and student data management.", live: "https://student-mca-app.onrender.com" },
-    { title: "Study Planner", tech: "Web Technologies", description: "Productivity application designed to organize academic schedules, track tasks, and plan study sessions.", live: "https://study-planner-ochre.vercel.app" },
-    { title: "Interactive Path Maker", tech: "Web Technologies", description: "Engaging visual tool for creating, mapping, and visualizing custom pathways and workflows.", live: "https://interactive-path-maker.vercel.app" },
-    { title: "Anime World", tech: "Frontend Technologies", description: "Responsive web platform designed for anime enthusiasts to browse and discover content.", live: "https://anime-world-web.vercel.app" }
-  ],
-  education: [
-    { degree: "Master of Computer Applications (MCA)", inst: "Shree Devi Institute of Technology", year: "2026", score: "86.74% / 8.67 CGPA" },
-    { degree: "Bachelor of Computer Applications (BCA)", inst: "Padua College of Commerce and Management", year: "2024", score: "80.39% / 8.48 CGPA" },
-    { degree: "Pre-University Course (PUC)", inst: "Padua PU College", year: "2021", score: "68%" },
-    { degree: "S.S.L.C", inst: "Padua High School", year: "2019", score: "64%" }
-  ],
-  achievements: [
-    { title: "1st Prize, Shark Tank Competition", description: "Won first place in a team of two for presenting an innovative business and technical idea at SDM College.", icon: <Trophy className="text-yellow-400" size={24}/> },
-    { title: "Google GDG 2025", description: "Participated in GDG Cloud Community Day 2025, gaining hands-on experience in Agentic AI, Gemini 1.5 integration, and Vertex AI for scalable solutions.", icon: <Sparkles className="text-sky-400" size={24}/> }
-  ]
-};
+  {
+    category: "Frontend Development",
+    icon: <Code2 className="w-5 h-5 text-blue-400" />,
+    items: ["React.js", "Tailwind CSS", "HTML5", "Vite", "Glassmorphism UI"]
+  },
+  {
+    category: "Backend & APIs",
+    icon: <Terminal className="w-5 h-5 text-green-400" />,
+    items: ["Node.js", "Express.js", "FastAPI", "Python", "RESTful APIs", "Socket.IO"]
+  },
+  {
+    category: "Database & Cloud",
+    icon: <Database className="w-5 h-5 text-orange-400" />,
+    items: ["MongoDB", "PostgreSQL", "Firebase", "Motor Async Driver"]
+  },
+  {
+    category: "Deployment & Tools",
+    icon: <Cloud className="w-5 h-5 text-sky-400" />,
+    items: ["Vercel", "Render", "GitHub", "CI/CD", "MS Office", "SEO"]
+  },
+  {
+    category: "Core & Soft Skills",
+    icon: <Users className="w-5 h-5 text-pink-400" />,
+    items: ["Analytical Thinking", "Team Collaboration", "Technical Documentation", "DBMS"]
+  }
+];
+
+const PROJECTS_DATA = [
+  {
+    title: "xTransMatrix | Moultrie Solution",
+    year: "2024",
+    tech: ["React", "FastAPI", "MongoDB", "Vercel", "Render"],
+    description: "A cloud-native data engineering pipeline transforming unstructured IoT feedback into actionable intelligence. Features real-time dashboard analytics, Pydantic data validation, and an NLP simulation matrix to identify early product churn signals.",
+    live: "https://xtransmatrix-case-study.vercel.app",
+    github: "",
+    isCaseStudy: true
+  },
+  {
+    title: "The Autonomous Cognitive Interviewer",
+    year: "2025",
+    tech: ["React (Vite)", "Tailwind CSS", "Gemini API", "Web Speech API"],
+    description: "An AI-powered mock interview platform bridging the gap between academia and industry. Features real-time voice-to-text interaction, a dynamic 2-tier learning path, and live AI rendering for constructive feedback and missed technical keywords.",
+    live: "https://interview-sim-client-frontend.vercel.app",
+    github: ""
+  },
+  {
+    title: "The Weather (Stratos)",
+    year: "2024",
+    tech: ["React", "OpenWeatherMap API", "Tailwind"],
+    description: "An expedition-themed meteorological dashboard. Beyond standard forecasting, it features a context-aware recommendation engine that suggests practical travel gear and situational provisions based on real-time climate metrics.",
+    live: "https://weather-proj-phi.vercel.app",
+    github: ""
+  },
+  {
+    title: "TaskFlow",
+    year: "2026",
+    tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Socket.IO"],
+    description: "Enterprise-grade real-time collaborative workspace featuring Agile sprint tracking, Kanban workflows, AI-powered task assistance, analytics dashboards, and role-based access control.",
+    live: "https://taskflow-omega-drab.vercel.app",
+    github: ""
+  },
+  {
+    title: "StudyForge: AI Learning Platform",
+    year: "2025",
+    tech: ["FastAPI", "React", "PostgreSQL", "Firebase"],
+    description: "AI-powered educational platform providing document-grounded responses, a dynamic quiz engine, and a real-time collaborative whiteboard to enhance remote learning experiences.",
+    live: "https://studyforge4.vercel.app",
+    github: ""
+  },
+  {
+    title: "Expense Tracking System",
+    year: "2025",
+    tech: ["React", "Node.js", "Express", "MongoDB"],
+    description: "Financial dashboard offering visual analytics for tracking income and expenses. Features detailed category-wise breakdowns and comprehensive CRUD transaction management.",
+    live: "https://personal-expense-track-seven.vercel.app",
+    github: ""
+  },
+  {
+    title: "Simple Anime Website",
+    year: "2024",
+    tech: ["React", "CSS", "API Integration"],
+    description: "A clean and responsive web application for discovering and tracking anime series.",
+    live: "https://anime-world-web.vercel.app",
+    github: ""
+  },
+  {
+    title: "Study Planner",
+    year: "2024",
+    tech: ["React", "Tailwind"],
+    description: "A productivity tool aimed at helping students organize their academic schedules and track study goals effectively.",
+    live: "https://study-planner-ochre.vercel.app",
+    github: ""
+  },
+  {
+    title: "Interactive Path Maker",
+    year: "2024",
+    tech: ["React", "Dynamic Routing"],
+    description: "A creative digital tool allowing users to build and visualize interactive decision trees and custom learning paths.",
+    live: "https://interactive-path-maker.vercel.app",
+    github: ""
+  },
+  {
+    title: "Student Management System",
+    year: "2024",
+    tech: ["Java Backend", "Web Interface"],
+    description: "A comprehensive backend system for managing student records, academic tracking, and institutional administration.",
+    live: "https://student-mca-app.onrender.com",
+    github: ""
+  }
+];
 
 export default function App() {
   return (
-    <div className="bg-slate-950 min-h-screen text-slate-200 relative overflow-hidden">
-      {/* Immersive Background Elements */}
-      <div className="absolute inset-0 bg-grid-pattern z-0 opacity-40 pointer-events-none"></div>
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[600px] bg-sky-500/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
-      
-      <CustomStyles />
-      <nav className="fixed w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/5 py-4">
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <h1 className="text-xl font-bold tracking-tight text-white">{PORTFOLIO_DATA.name}</h1>
-          <div className="hidden md:flex space-x-6 text-sm font-medium">
-            {['About', 'Experience', 'Projects', 'Achievements'].map(s => <a key={s} href={`#${s.toLowerCase()}`} className="hover:text-sky-400 transition-colors">{s}</a>)}
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-slate-300 font-sans selection:bg-indigo-500/30">
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes pulse-ring {
+          0% { transform: scale(0.8); opacity: 0.5; }
+          100% { transform: scale(2); opacity: 0; }
+        }
+        .status-dot-container {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .status-dot {
+          width: 8px;
+          height: 8px;
+          background-color: #4ade80;
+          border-radius: 50%;
+          position: relative;
+          z-index: 2;
+        }
+        .status-ring {
+          position: absolute;
+          width: 8px;
+          height: 8px;
+          background-color: #4ade80;
+          border-radius: 50%;
+          animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+          z-index: 1;
+        }
+      `}} />
+
+      {/* Navigation / Header */}
+      <nav className="sticky top-0 z-50 backdrop-blur-md bg-slate-950/70 border-b border-white/5">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400">
+              DHANUSH HEBBAR
+            </span>
+          </div>
+          
+          <div className="flex items-center gap-4 text-sm font-medium">
+            <div className="flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-3 py-1.5 rounded-full border border-emerald-500/20">
+              <div className="status-dot-container mr-1">
+                <div className="status-ring"></div>
+                <div className="status-dot"></div>
+              </div>
+              Available for opportunities
+            </div>
           </div>
         </div>
       </nav>
 
-      <main className="pt-32 pb-20 px-6 max-w-7xl mx-auto space-y-32 relative z-10">
-        {}
-        <section id="home" className="text-center animate-fade-in mt-10 flex flex-col items-center justify-center min-h-[50vh]">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 mb-8 animate-float">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
-            </span>
-            <span className="text-sm font-medium">Available for new opportunities</span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-            Hi, I'm <br className="md:hidden" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400 bg-[length:200%_auto] animate-[shine_5s_linear_infinite]">
-              {PORTFOLIO_DATA.name}
+      <main className="max-w-6xl mx-auto px-6 py-12 lg:py-20 space-y-24">
+        
+        {/* HERO SECTION */}
+        <section className="text-center space-y-6 max-w-3xl mx-auto">
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-4">
+            Web Developer & <br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400">
+              AI Enthusiast.
             </span>
           </h1>
-          <h2 className="text-2xl md:text-3xl text-slate-400 font-medium mb-10 max-w-2xl mx-auto leading-relaxed">
-            {PORTFOLIO_DATA.role}
-          </h2>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a href="#projects" className="px-8 py-4 rounded-full bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold transition-all shadow-[0_0_20px_-5px_rgba(56,189,248,0.4)] hover:shadow-[0_0_30px_0px_rgba(56,189,248,0.6)] hover:-translate-y-1">
-              View My Work
-            </a>
-            <a href="#contact" onClick={(e) => { e.preventDefault(); document.querySelector('footer').scrollIntoView({ behavior: 'smooth' }); }} className="px-8 py-4 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-bold transition-all border border-white/10 hover:border-white/20 hover:-translate-y-1 flex items-center gap-2">
+          <p className="text-lg text-slate-400 leading-relaxed whitespace-pre-line">
+            I am a Master of Computer Applications (MCA) graduate combining a strong academic foundation with practical problem-solving. 
+            {"\n\n"}
+            From learning my first computer keys in 1st standard to architecting full-stack web applications in my 6th sem BCA, I have spent 16 years growing on the exact same campus. Today, I actively fuse modern MERN architectures with cutting-edge AI integrations to build scalable, intelligent platforms.
+          </p>
+          <div className="flex justify-center gap-4 pt-6">
+            <a href="mailto:dhanushhebbar6@gmail.com" className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
               <Mail size={18} /> Contact Me
             </a>
+            <div className="flex gap-3">
+              <a href="https://github.com/DhanushHebbar" target="_blank" rel="noreferrer" className="flex items-center justify-center p-3 bg-slate-800/50 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors border border-white/5">
+                <Github size={20} />
+              </a>
+              <a href="https://linkedin.com/in/dhanush-hebbar" target="_blank" rel="noreferrer" className="flex items-center justify-center p-3 bg-slate-800/50 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors border border-white/5">
+                <Linkedin size={20} />
+              </a>
+            </div>
           </div>
         </section>
 
-        <section id="about" className="grid lg:grid-cols-2 gap-16">
-          <div>
-            <h2 className="text-3xl font-bold mb-6">About Me</h2>
-            <p className="text-slate-400 text-lg leading-relaxed whitespace-pre-line">{PORTFOLIO_DATA.summary}</p>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {}
-            {PORTFOLIO_DATA.skills.map((s, i) => (
-              <div key={i} className="glass-panel p-6 rounded-2xl border border-white/5 hover:border-white/10 hover:bg-white/[0.02] transition-all">
-                <div className="mb-3 p-2 bg-slate-900/50 inline-block rounded-xl">{s.icon}</div>
-                <h4 className="font-bold text-white mb-2">{s.category}</h4>
-                <p className="text-xs text-slate-400 leading-relaxed">{s.items.join(', ')}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+        <hr className="border-white/5" />
 
-        <section id="experience" className="space-y-12">
-          <h2 className="text-3xl font-bold text-center">Experience & Education</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              {PORTFOLIO_DATA.experience.map((e, i) => (
-                <div key={i} className="glass-card p-6 rounded-2xl">
-                  <h3 className="font-bold text-white">{e.role}</h3>
-                  <p className="text-sky-400 text-sm mb-2">{e.company} • {e.duration}</p>
-              <p className="text-sm text-slate-400">{e.description}</p>
-            </div>
-          ))}
-        </div>
-        <div className="space-y-4">
-          {PORTFOLIO_DATA.education.map((e, i) => (
-            <div key={i} className="glass-panel p-5 rounded-2xl flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 border border-white/5 hover:border-sky-500/30 transition-all relative overflow-hidden group hover:-translate-y-1">
-              <div className="absolute inset-0 bg-gradient-to-r from-sky-500/0 via-sky-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative z-10">
-                <h4 className="font-semibold text-white text-lg">{e.degree}</h4>
-                <p className="text-sm text-slate-400 mt-1">{e.inst}</p>
-              </div>
-              <div className="relative z-10 flex flex-col sm:items-end gap-2">
-                <span className="text-sm font-bold bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent px-1 drop-shadow-sm group-hover:scale-105 transition-transform">
-                  {e.score}
-                </span>
-                <span className="text-xs font-mono text-slate-500 bg-slate-900/50 px-3 py-1 rounded-full border border-white/5">{e.year}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <section id="projects" className="space-y-12">
-      <h2 className="text-3xl font-bold text-center">Featured Projects</h2>
-      <div className="grid md:grid-cols-3 gap-6">
-        {PORTFOLIO_DATA.projects.map((p, i) => (
-          <div key={i} className="glass-card p-6 rounded-3xl flex flex-col group border border-white/5 hover:border-sky-500/30 relative overflow-hidden">
-            {p.isCaseStudy && (
-              <div className="absolute top-0 right-0 bg-gradient-to-r from-sky-500/20 to-indigo-500/20 text-sky-300 text-[10px] font-bold px-3 py-1.5 rounded-bl-xl border-b border-l border-white/5 uppercase tracking-wider backdrop-blur-md z-10">
-                Case Study
-              </div>
-            )}
-            <h3 className={`text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors ${p.isCaseStudy ? 'pr-20' : ''}`}>{p.title}</h3>
-            {p.tech && <div className="text-xs font-mono text-indigo-400 mb-3">{p.tech}</div>}
-            <p className="text-sm text-slate-400 mb-6 flex-grow leading-relaxed">{p.description}</p>
-            <div className="flex flex-wrap items-center gap-3 mt-auto pt-4 border-t border-white/5">
-                  <a href={p.live} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sky-400 font-semibold hover:text-sky-300 transition-colors text-sm bg-sky-500/10 px-4 py-2 rounded-xl hover:bg-sky-500/20">
-                    Live Demo <ExternalLink size={14} />
-                  </a>
-                  {p.github && (
-                    <a href={p.github} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-slate-300 font-semibold hover:text-white transition-colors text-sm bg-white/5 px-4 py-2 rounded-xl hover:bg-white/10">
-                      Code <Github size={14} />
-                    </a>
-                  )}
+        {/* SKILLS SECTION */}
+        <section>
+          <div className="flex items-center gap-2 mb-8">
+            <Terminal className="text-indigo-400" />
+            <h2 className="text-2xl font-bold text-white">Technical Arsenal</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {SKILLS_DATA.map((skillGroup, idx) => (
+              <div key={idx} className="p-6 rounded-2xl bg-slate-800/20 border border-white/5 hover:bg-slate-800/40 transition-colors">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 rounded-lg bg-slate-900/50">
+                    {skillGroup.icon}
+                  </div>
+                  <h3 className="text-lg font-semibold text-white">{skillGroup.category}</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {skillGroup.items.map((item, i) => (
+                    <span key={i} className="px-3 py-1 bg-slate-900/50 text-slate-300 text-sm rounded-full border border-white/5">
+                      {item}
+                    </span>
+                  ))}
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-    <section id="achievements" className="space-y-12">
-      <h2 className="text-3xl font-bold text-center">Achievements</h2>
-      <div className="grid md:grid-cols-2 gap-6">
-        {PORTFOLIO_DATA.achievements.map((a, i) => (
-          <div key={i} className="glass-panel p-6 rounded-3xl flex flex-col sm:flex-row gap-6 items-start hover:bg-slate-800/50 transition-all border border-white/5 hover:border-yellow-500/30 hover:shadow-[0_10px_30px_-10px_rgba(234,179,8,0.15)] group">
-            <div className="p-4 bg-slate-900 rounded-2xl shadow-inner shadow-black/50 group-hover:scale-110 transition-transform duration-300">
-              {a.icon}
+        {/* EXPERIENCE & EDUCATION SECTION */}
+        <section className="grid md:grid-cols-2 gap-12">
+          {/* Experience */}
+          <div>
+            <div className="flex items-center gap-2 mb-8">
+              <Briefcase className="text-indigo-400" />
+              <h2 className="text-2xl font-bold text-white">Experience</h2>
             </div>
-            <div>
-              <h3 className="text-xl font-bold text-white mb-2">{a.title}</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">{a.description}</p>
+            
+            <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-700 before:to-transparent">
+              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-slate-900 bg-indigo-500 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                  <Briefcase size={16} />
+                </div>
+                <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-white/10 bg-slate-800/30 backdrop-blur-sm">
+                  <div className="flex items-center justify-between space-x-2 mb-1">
+                    <div className="font-bold text-white">SkillXAcademy</div>
+                    <time className="text-xs font-medium text-indigo-400">Mar '25 - Jun '25</time>
+                  </div>
+                  <div className="text-sm text-slate-400 mb-2">Full Stack Web Development Intern</div>
+                  <ul className="text-sm space-y-1 list-disc list-inside text-slate-300">
+                    <li>14-week internship covering MERN stack, REST APIs, and real-time apps.</li>
+                    <li>Built The Autonomous Cognitive Interviewer using Gemini API.</li>
+                    <li>Developed TaskFlow real-time collaborative tool via Socket.IO.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-slate-900 bg-slate-700 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                  <Briefcase size={16} />
+                </div>
+                <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-white/5 bg-slate-800/10">
+                  <div className="flex items-center justify-between space-x-2 mb-1">
+                    <div className="font-bold text-white">Zephyr Technologies</div>
+                    <time className="text-xs font-medium text-slate-400">Mar '24 - Apr '24</time>
+                  </div>
+                  <div className="text-sm text-slate-400 mb-2">Full Stack Developer Intern</div>
+                  <ul className="text-sm space-y-1 list-disc list-inside text-slate-300">
+                    <li>Contributed to full-stack interface and backend development.</li>
+                    <li>Improved application performance and enhanced user experience.</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
-        ))}
-      </div>
-    </section>
-  </main>
 
-  <footer className="border-t border-white/5 bg-slate-950/80 py-16 text-center text-slate-500 relative z-10 mt-20">
-    <div className="max-w-4xl mx-auto px-6 space-y-8">
-      <h2 className="text-2xl font-bold text-white">Let's Connect</h2>
-      <div className="flex flex-wrap justify-center gap-4">
-        <a href={`mailto:${PORTFOLIO_DATA.contact.email}`} className="flex items-center gap-2 hover:text-sky-400 hover:bg-sky-400/10 transition-colors bg-white/5 px-5 py-3 rounded-full border border-white/5 hover:border-sky-500/30">
-          <Mail size={18} /> <span className="hidden sm:inline">{PORTFOLIO_DATA.contact.email}</span>
-        </a>
-        <a href={`tel:${PORTFOLIO_DATA.contact.phone}`} className="flex items-center gap-2 hover:text-sky-400 hover:bg-sky-400/10 transition-colors bg-white/5 px-5 py-3 rounded-full border border-white/5 hover:border-sky-500/30">
-          <Phone size={18} /> <span className="hidden sm:inline">{PORTFOLIO_DATA.contact.phone}</span>
-        </a>
-        <a href={PORTFOLIO_DATA.contact.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-sky-400 hover:bg-sky-400/10 transition-colors bg-white/5 px-5 py-3 rounded-full border border-white/5 hover:border-sky-500/30">
-          <Linkedin size={18} /> LinkedIn
-        </a>
-        <a href={PORTFOLIO_DATA.contact.github} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-sky-400 hover:bg-sky-400/10 transition-colors bg-white/5 px-5 py-3 rounded-full border border-white/5 hover:border-sky-500/30">
-          <Github size={18} /> GitHub
-        </a>
-      </div>
-      <div className="pt-8 border-t border-white/5">
-        <p className="text-sm">© {new Date().getFullYear()} {PORTFOLIO_DATA.name}. Built with Passion.</p>
-      </div>
+          {/* Education */}
+          <div>
+            <div className="flex items-center gap-2 mb-8">
+              <GraduationCap className="text-indigo-400" />
+              <h2 className="text-2xl font-bold text-white">Education</h2>
+            </div>
+            
+            <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-700 before:to-transparent">
+              {[
+                { deg: "Master of Computer Applications (MCA)", inst: "Shree Devi Institute of Technology", year: "2026", marks: "86.74% / 8.67 CGPA" },
+                { deg: "Bachelor of Computer Applications (BCA)", inst: "Padua College of Commerce and Management", year: "2024", marks: "80.39% / 8.48 CGPA" },
+                { deg: "Pre-University Course (PUC)", inst: "Padua PU College", year: "2021", marks: "68%" },
+                { deg: "S.S.L.C", inst: "Padua High School", year: "2019", marks: "64%" }
+              ].map((edu, idx) => (
+                 <div key={idx} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                  <div className={`flex items-center justify-center w-8 h-8 rounded-full border-4 border-slate-900 ${idx === 0 ? 'bg-indigo-500' : 'bg-slate-700'} text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10`}>
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
+                  <div className="w-[calc(100%-3rem)] md:w-[calc(50%-2rem)] p-4 rounded-xl border border-white/5 bg-slate-800/10 hover:bg-slate-800/30 transition-colors">
+                    <div className="font-bold text-white mb-1 leading-tight">{edu.deg}</div>
+                    <div className="text-sm text-slate-400 mb-2">{edu.inst}</div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs bg-slate-900/50 px-2 py-1 rounded text-slate-300">{edu.year}</span>
+                      <span className="text-sm font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400">{edu.marks}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* PROJECTS SECTION */}
+        <section>
+          <div className="flex items-center gap-2 mb-8">
+            <Code className="text-indigo-400" />
+            <h2 className="text-2xl font-bold text-white">Featured Projects</h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {PROJECTS_DATA.map((project, idx) => (
+              <div key={idx} className="group relative flex flex-col justify-between p-6 rounded-2xl bg-slate-800/20 border border-white/5 hover:border-indigo-500/30 hover:bg-slate-800/40 transition-all hover:-translate-y-1 shadow-lg hover:shadow-indigo-500/10">
+                {project.isCaseStudy && (
+                  <div className="absolute top-0 right-0 -mt-3 -mr-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg border border-white/20 transform rotate-3">
+                    CASE STUDY
+                  </div>
+                )}
+                <div>
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-xl font-bold text-white group-hover:text-indigo-300 transition-colors">
+                      {project.title}
+                    </h3>
+                    <span className="text-xs font-mono bg-slate-900/50 text-indigo-400 px-2 py-1 rounded">
+                      {project.year}
+                    </span>
+                  </div>
+                  <p className="text-sm text-slate-400 mb-6 leading-relaxed">
+                    {project.description}
+                  </p>
+                </div>
+                
+                <div className="space-y-6">
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t, i) => (
+                      <span key={i} className="text-[11px] font-medium px-2 py-1 bg-slate-900/60 text-slate-300 rounded border border-white/5">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <div className="flex gap-3 pt-4 border-t border-white/5">
+                    {project.live && project.live !== "#" && (
+                      <a href={project.live} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-sm font-medium text-white bg-indigo-500/20 hover:bg-indigo-500/40 px-4 py-2 rounded-full transition-colors">
+                        <ExternalLink size={14} /> Live Demo
+                      </a>
+                    )}
+                    {project.github && project.github !== "#" && (
+                      <a href={project.github} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-sm font-medium text-slate-300 bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-full transition-colors border border-white/5">
+                        <Github size={14} /> Code
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ACHIEVEMENTS SECTION */}
+        <section>
+          <div className="flex items-center gap-2 mb-8">
+            <Award className="text-indigo-400" />
+            <h2 className="text-2xl font-bold text-white">Achievements & Recognition</h2>
+          </div>
+          
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="p-5 rounded-xl bg-gradient-to-br from-amber-500/10 to-orange-500/5 border border-amber-500/20">
+              <div className="font-bold text-amber-400 mb-2 flex items-center gap-2">
+                🏆 1st Prize, Shark Tank (SDM College)
+              </div>
+              <p className="text-sm text-slate-300">
+                Won first place in a team of two for presenting an innovative business and technical idea.
+              </p>
+            </div>
+            
+            <div className="p-5 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/5 border border-blue-500/20">
+              <div className="font-bold text-blue-400 mb-2 flex items-center gap-2">
+                ☁️ Google GDG Cloud Community Day 2025
+              </div>
+              <p className="text-sm text-slate-300">
+                Gained hands-on experience in Agentic AI, Gemini 1.5 integration, and Vertex AI for scalable cloud solutions.
+              </p>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <footer className="border-t border-white/5 bg-slate-950/50 mt-12 py-8 text-center text-slate-500 text-sm">
+        <p>© {new Date().getFullYear()} Dhanush Hebbar. Built with React & Tailwind.</p>
+      </footer>
     </div>
-  </footer>
-</div>
   );
 }
