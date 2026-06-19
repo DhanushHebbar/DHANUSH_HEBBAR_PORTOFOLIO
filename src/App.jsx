@@ -201,6 +201,7 @@ const PORTFOLIO_DATA = {
       tech: "React, FastAPI, MongoDB, Vercel, Render", 
       description: "Cloud-native IoT data engineering pipeline. Transforms massive volumes of unstructured customer feedback into actionable intelligence, automating sentiment annotation and identifying early churn signals.", 
       live: "https://xtransmatrix-case-study.vercel.app",
+      github: "#",
       isCaseStudy: true 
     },
     { 
@@ -208,63 +209,72 @@ const PORTFOLIO_DATA = {
       icon: <Layout size={24} className="text-indigo-400" />,
       tech: "React.js, Node.js, Express.js, MongoDB, Socket.IO", 
       description: "Enterprise-grade project management platform featuring real-time collaboration, Agile sprint tracking, and AI assistance.", 
-      live: "https://taskflow-omega-drab.vercel.app" 
+      live: "https://taskflow-omega-drab.vercel.app",
+      github: "https://github.com/DhanushHebbar/taskflow-client"
     },
     { 
       title: "The Cognitive Interviewer", 
       icon: <Brain size={24} className="text-purple-400" />,
       tech: "React, Tailwind CSS, Web Speech API", 
       description: "Professional-grade, voice-first mock interview platform with real-time AI evaluation, performance analytics, and dynamic curriculum unlocking.", 
-      live: "https://interview-sim-client-frontend.vercel.app" 
+      live: "https://interview-sim-client-frontend.vercel.app",
+      github: "https://github.com/DhanushHebbar/interview-sim-client-frontend"
     },
     { 
       title: "The Weather (Stratos)", 
       icon: <Cloud size={24} className="text-cyan-400" />,
       tech: "React, OpenWeatherMap API", 
       description: "Expedition-themed meteorological dashboard framing climate data through the lens of exploration, pairing real-time metrics with situational survival gear recommendations.", 
-      live: "https://weather-proj-phi.vercel.app" 
+      live: "https://weather-proj-phi.vercel.app",
+      github: "#"
     },
     { 
       title: "StudyForge", 
       icon: <GraduationCap size={24} className="text-emerald-400" />,
       tech: "FastAPI, React, PostgreSQL, Firebase", 
       description: "AI-powered learning platform with document-grounded responses, quiz engine, and collaborative whiteboard. Currently architecting Advanced AI features.", 
-      live: "https://studyforge4.vercel.app" 
+      live: "https://studyforge4.vercel.app",
+      github: "#"
     },
     { 
       title: "Expense Tracking System", 
       icon: <TrendingUp size={24} className="text-green-400" />,
       tech: "React, Node.js, Express, MongoDB", 
       description: "Financial dashboard with visual analytics to track income/expenses and comprehensive transaction management.", 
-      live: "https://personal-expense-track-seven.vercel.app" 
+      live: "https://personal-expense-track-seven.vercel.app",
+      github: "https://github.com/DhanushHebbar/personal-expense-track-client"
     },
     { 
       title: "Student Management System", 
       icon: <Users size={24} className="text-orange-400" />,
       tech: "Java, Web Technologies", 
       description: "A robust, web-based backend-heavy system for administrative workflows and student data management.", 
-      live: "https://student-mca-app.onrender.com" 
+      live: "https://student-mca-app.onrender.com",
+      github: "#"
     },
     { 
       title: "Study Planner", 
       icon: <Calendar size={24} className="text-pink-400" />,
       tech: "Web Technologies", 
       description: "Productivity application designed to organize academic schedules, track tasks, and plan study sessions.", 
-      live: "https://study-planner-ochre.vercel.app" 
+      live: "https://study-planner-ochre.vercel.app",
+      github: "#"
     },
     { 
       title: "Interactive Path Maker", 
       icon: <Map size={24} className="text-yellow-400" />,
       tech: "Web Technologies", 
       description: "Engaging visual tool for creating, mapping, and visualizing custom pathways and workflows.", 
-      live: "https://interactive-path-maker.vercel.app" 
+      live: "https://interactive-path-maker.vercel.app",
+      github: "#"
     },
     { 
       title: "Anime World", 
       icon: <Tv size={24} className="text-red-400" />,
       tech: "Frontend Technologies", 
       description: "Responsive web platform designed for anime enthusiasts to browse and discover content.", 
-      live: "https://anime-world-web.vercel.app" 
+      live: "https://anime-world-web.vercel.app",
+      github: "#"
     }
   ],
   education: [
@@ -614,6 +624,12 @@ export default function App() {
                     <div className="absolute -right-8 -bottom-8 opacity-[0.02] transform group-hover:scale-125 group-hover:-rotate-12 transition-all duration-700 pointer-events-none">
                       {React.cloneElement(p.icon, { size: 220 })}
                     </div>
+
+                    {p.isCaseStudy && (
+                      <div className="absolute top-0 right-0 bg-gradient-to-r from-sky-500 to-purple-600 text-white text-[10px] sm:text-[11px] font-black px-6 py-2.5 rounded-bl-[1.9rem] shadow-lg uppercase tracking-[0.2em] z-20 flex items-center justify-center border-b border-l border-white/10">
+                        Case Study
+                      </div>
+                    )}
                   
                   <div className="flex items-start gap-5 mb-6 relative z-10">
                     <div className="p-4 rounded-2xl bg-slate-900 border border-white/10 shadow-inner shadow-black/50 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
