@@ -4,6 +4,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dhanush Hebbar | Portfolio</title>
+    
+    <!-- Dynamic DH RGB Favicon Script -->
+    <script>
+      (function animateFavicon() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+
+        // Find the existing favicon link or create a new one
+        let link = document.querySelector("link[rel~='icon']");
+        if (!link) {
+          link = document.createElement('link');
+          link.rel = 'icon';
+          document.head.appendChild(link);
+        }
+
+        let hue = 0;
+
+        // Run this loop every 150 milliseconds
+        setInterval(() => {
+          // 1. Draw a dark slate background
+          ctx.fillStyle = '#020617'; 
+          ctx.fillRect(0, 0, 32, 32);
+
+          // 2. Setup the "DH" text style
+          ctx.font = 'bold 20px monospace';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          
+          // 3. Cycle the color using HSL
+          ctx.fillStyle = `hsl(${hue}, 100%, 60%)`;
+          ctx.fillText('DH', 16, 17);
+
+          // 4. Update the tab icon
+          link.href = canvas.toDataURL('image/png');
+
+          // 5. Shift the color hue
+          hue = (hue + 15) % 360;
+        }, 150); 
+      })();
+    </script>
   </head>
   <body class="bg-slate-950 text-white">
     <div id="root"></div>
