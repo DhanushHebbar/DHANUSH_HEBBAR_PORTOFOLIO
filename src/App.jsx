@@ -269,6 +269,14 @@ const PORTFOLIO_DATA = {
       github: "#"
     },
     { 
+      title: "Simple Blog Platform", 
+      icon: <Globe size={24} className="text-teal-400" />,
+      tech: "PHP, MySQL, Tailwind CSS", 
+      description: "Custom lightweight CMS featuring secure authentication, role-based access control, dynamic relational content generation, and strict security practices against SQL injection.", 
+      live: "https://blogg.page.gd/",
+      github: "https://github.com/DhanushHebbar/PHP-Blog-platform"
+    },
+    { 
       title: "Anime World", 
       icon: <Tv size={24} className="text-red-400" />,
       tech: "Frontend Technologies", 
