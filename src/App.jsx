@@ -175,7 +175,7 @@ const CustomStyles = () => (
 const PORTFOLIO_DATA = {
   name: "Dhanush Hebbar",
   role: "Web Developer & AI Enthusiast",
-  summary: "I am a passionate MCA graduate, Full-Stack Web Developer, and dedicated AI Enthusiast. My tech journey is rooted in deep persistence—from learning my first computer keys in 1st standard to architecting full-stack web apps in my 6th sem BCA, I spent an incredible 16 years growing and evolving on the exact same campus.\n\nToday, I leverage that foundational drive to build intelligent, scalable applications. I have successfully architected and deployed multiple full-stack projects across diverse technologies, heavily integrating modern AI (like Gemini, Vertex AI, and Agentic workflows) into real-world solutions. I am highly adaptable, endlessly curious, and driven to bridge the gap between traditional web development and cutting-edge artificial intelligence.",
+  summary: "I am a passionate MCA graduate, Full-Stack Web Developer, and dedicated AI Enthusiast. My tech journey is rooted in deep persistence—from writing my first lines of code to architecting advanced full-stack web apps, I am dedicated to continuous growth.\n\nToday, I leverage that foundational drive to build intelligent, scalable applications. I have successfully architected and deployed multiple full-stack projects across diverse technologies, heavily integrating modern AI (like Gemini, Vertex AI, and Agentic workflows) into real-world solutions. I am highly adaptable, endlessly curious, and driven to bridge the gap between traditional web development and cutting-edge artificial intelligence.",
   contact: {
     email: "dhanushhebbar6@gmail.com",
     phone: "+91 8618543398",
@@ -196,7 +196,7 @@ const PORTFOLIO_DATA = {
   ],
   projects: [
     { 
-      title: "xTransMatrix | Moultrie", 
+      title: "IoT Feedback Intelligence Engine", 
       icon: <Database size={24} className="text-sky-400" />,
       tech: "React, FastAPI, MongoDB, Vercel, Render", 
       description: "Cloud-native IoT data engineering pipeline. Transforms massive volumes of unstructured customer feedback into actionable intelligence, automating sentiment annotation and identifying early churn signals.", 
@@ -278,7 +278,7 @@ const PORTFOLIO_DATA = {
     }
   ],
   education: [
-    { degree: "Master of Computer Applications (MCA)", inst: "Shree Devi Institute of Technology", year: "2026", score: "86.74% / 8.67 CGPA" },
+    { degree: "Master of Computer Applications (MCA)", inst: "Shree Devi Institute of Technology", year: "2026", score: "86.74% / 8.67 CGPA (Aggregate till 3rd Sem)" },
     { degree: "Bachelor of Computer Applications (BCA)", inst: "Padua College of Commerce and Management", year: "2024", score: "80.39% / 8.48 CGPA" },
     { degree: "Pre-University Course (PUC)", inst: "Padua PU College", year: "2021", score: "68%" },
     { degree: "S.S.L.C", inst: "Padua High School", year: "2019", score: "64%" }
@@ -475,7 +475,7 @@ export default function App() {
           <FadeInSection delay={400} className="w-full mt-24 max-w-5xl">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-2 rounded-3xl glass-panel border border-white/10">
               {[
-                { label: "Years on Campus", val: "16", icon: <Map className="text-purple-400" size={20}/> },
+                { label: "Repositories", val: "15+", icon: <Github className="text-purple-400" size={20}/> },
                 { label: "Full-Stack Projects", val: "10+", icon: <Code2 className="text-sky-400" size={20}/> },
                 { label: "AI Integrations", val: "5+", icon: <Brain className="text-pink-400" size={20}/> },
                 { label: "Commitment", val: "100%", icon: <Zap className="text-yellow-400" size={20}/> },
